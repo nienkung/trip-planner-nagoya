@@ -1,0 +1,683 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;500&family=Noto+Sans+JP:wght@300;400&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F0F6FB;--sf:#fff;--sf2:#F7FBFE;
+  --bd:#C8DFF0;--bdl:#DFF0FA;
+  --ink:#1A2B3C;--mid:#3A5870;--mu:#6A8FA8;--ht:#A0C4DC;
+  --bl:#1A6FAA;--bll:#2E87C8;--blp:#E3F2FC;--bld:#0D4A7A;
+  --tn:#7A6348;--tnp:#EDE5D8;--tnb:#D0C0A8;
+  --sg:#3A6050;--sgp:#DFF0E8;--sgb:#A8CFC0;
+  --rs:#8B3A2A;--rsp:#F5E8E5;
+  --gyp:#EEF3F8;
+}
+body{font-family:'Noto Sans JP',sans-serif;font-weight:300;background:var(--bg);margin:0}
+/* header */
+.hdr{background:var(--sf);border-bottom:3px solid var(--bl)}
+.hi{padding:16px 16px 0}
+.ht{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.br{display:flex;align-items:center;gap:10px}
+.km{width:30px;height:30px;border:1.5px solid var(--bl);border-radius:50%;flex-shrink:0;position:relative}
+.km::before{content:'';position:absolute;inset:5px;border:1px solid var(--bl);border-radius:50%}
+.km::after{content:'';position:absolute;width:4px;height:4px;background:var(--bl);border-radius:50%;top:50%;left:50%;transform:translate(-50%,-50%)}
+.tn{font-family:'Shippori Mincho',serif;font-size:18px;font-weight:500;color:var(--ink);letter-spacing:.1em}
+.td{font-size:11px;color:var(--mu);letter-spacing:.08em;margin-top:3px}
+.hb{font-size:11px;color:var(--mu);cursor:pointer;padding:3px 10px;border:1px solid var(--bd);background:none}
+.hb:hover{border-color:var(--bl);color:var(--bl)}
+.tabs{display:flex}
+.tab{flex:1;text-align:center;padding:9px 0 8px;font-size:11px;letter-spacing:.14em;color:var(--ht);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
+.tab.on{color:var(--bl);border-bottom:2px solid var(--bl)}
+.tjp{display:block;font-family:'Shippori Mincho',serif;font-size:9px;letter-spacing:.2em;margin-top:1px;opacity:.6}
+/* content */
+.ct{padding:14px}
+.sdv{display:flex;align-items:center;gap:8px;margin:14px 0 10px}
+.sl{flex:1;height:1px;background:var(--bd)}
+.st{font-family:'Shippori Mincho',serif;font-size:10px;letter-spacing:.22em;color:var(--mu)}
+/* day card */
+.dc{background:var(--sf);border:1px solid var(--bd);margin-bottom:10px;overflow:hidden}
+.dh{display:flex;align-items:stretch;border-bottom:1px solid var(--bdl)}
+.dnc{background:var(--bl);min-width:42px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 0;gap:1px}
+.dnj{font-family:'Shippori Mincho',serif;font-size:8px;letter-spacing:.15em;color:rgba(255,255,255,.6)}
+.dnv{font-family:'Shippori Mincho',serif;font-size:18px;color:#fff}
+.di{flex:1;padding:9px 12px;display:flex;flex-direction:column;justify-content:center}
+.dl{font-size:13px;color:var(--ink)}
+.dd{font-size:10px;color:var(--mu);margin-top:2px}
+.da{display:flex;align-items:center;gap:5px;padding-right:10px}
+.dbg{font-size:10px;color:var(--bl);background:var(--blp);border:1px solid #B5D8F0;padding:2px 8px}
+.ib{font-size:11px;color:var(--mu);background:none;border:1px solid var(--bd);padding:2px 7px;cursor:pointer;white-space:nowrap}
+.ib:hover{border-color:var(--bl);color:var(--bl)}
+.ib.x:hover{border-color:var(--rs);color:var(--rs)}
+/* event row */
+.ei{display:flex;align-items:flex-start;padding:8px 10px 8px 0;border-bottom:1px solid var(--bdl)}
+.etc{width:42px;text-align:center;padding-top:2px;flex-shrink:0}
+.etm{font-size:10px;color:var(--ht)}
+.estr{width:3px;align-self:stretch;flex-shrink:0;margin-right:10px;min-height:18px}
+.eb{flex:1;min-width:0}
+.en{font-size:12px;color:var(--mid)}
+.eno{font-size:10px;color:var(--mu);margin-top:2px}
+.etgs{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
+.etg{font-size:9px;padding:1px 5px;background:var(--blp);color:var(--bl);border:1px solid #B5D8F0}
+.ea{display:flex;align-items:flex-start;gap:3px;flex-shrink:0;margin-top:1px}
+.emap{font-size:10px;color:var(--sg);background:var(--sgp);border:1px solid var(--sgb);padding:2px 6px;text-decoration:none}
+.ec{font-size:10px;color:var(--mid);min-width:52px;text-align:right;align-self:flex-start;margin-top:2px;padding-left:6px}
+.ar{display:flex;align-items:center;padding:7px 12px 7px 0;border-top:1px dashed var(--bd);cursor:pointer}
+.ar:hover{background:var(--blp)}
+.ari{width:42px;text-align:center;font-size:15px;color:var(--ht)}
+.art{font-size:11px;color:var(--mu);letter-spacing:.08em}
+.fr{display:flex;gap:8px;margin-top:10px}
+.bto{flex:1;padding:9px;background:none;border:1px dashed var(--bd);color:var(--mu);font-family:'Noto Sans JP',sans-serif;font-size:11px;cursor:pointer}
+.bto:hover{border-color:var(--tn);color:var(--tn);background:var(--tnp)}
+.bts{flex:1;padding:9px;background:var(--bl);border:none;color:#fff;font-family:'Noto Sans JP',sans-serif;font-size:11px;cursor:pointer}
+.bts:hover{background:var(--bll)}
+/* expenses */
+.bc{background:var(--sf);border:1px solid var(--bd);margin-bottom:12px;overflow:hidden}
+.btp{background:linear-gradient(135deg,var(--bld),var(--bl));padding:14px}
+.btl{font-family:'Shippori Mincho',serif;font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.65);margin-bottom:4px}
+.btv{font-family:'Shippori Mincho',serif;font-size:24px;color:#fff}
+.brs{padding:0 14px}
+.br2{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid var(--bdl);font-size:12px}
+.br2:last-child{border-bottom:none}
+.brl{color:var(--mu);display:flex;align-items:center;gap:6px}
+.brv{color:var(--mid)}
+.cd{width:7px;height:7px;border-radius:50%;display:inline-block}
+.frow{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.ft{font-size:10px;padding:3px 10px;border:1px solid var(--bd);color:var(--mu);background:var(--sf);cursor:pointer;letter-spacing:.08em}
+.ft.on{background:var(--bl);color:#fff;border-color:var(--bl)}
+.eli{background:var(--sf);border:1px solid var(--bd);margin-bottom:7px;display:flex;align-items:stretch;overflow:hidden}
+.estr2{width:3px;flex-shrink:0}
+.ebo{flex:1;padding:9px 12px}
+.enn{font-size:12px;color:var(--mid)}
+.emta{font-size:10px;color:var(--ht);margin-top:2px}
+.esr{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+.esc{font-size:9px;padding:1px 6px;background:var(--blp);color:var(--bl);border:1px solid #B5D8F0}
+.ert{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;padding:8px 10px;gap:5px}
+.eam{font-size:13px;color:var(--mid)}
+.cpr{font-size:10px;color:var(--ht)}
+.pb{font-size:9px;padding:1px 6px}
+.pb.cash{background:var(--sgp);color:var(--sg);border:1px solid var(--sgb)}
+.pb.card{background:var(--blp);color:var(--bl);border:1px solid #B5D8F0}
+/* split */
+.sph{background:var(--sf);border:1px solid var(--bd);margin-bottom:14px;overflow:hidden}
+.spht{background:linear-gradient(135deg,var(--bld),var(--bl));padding:14px}
+.sphti{font-family:'Shippori Mincho',serif;font-size:10px;letter-spacing:.22em;color:rgba(255,255,255,.6);margin-bottom:10px}
+.spg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ssl{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em}
+.ssv{font-family:'Shippori Mincho',serif;font-size:16px;color:#fff;margin-top:3px}
+.sphb{padding:12px 14px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.stg{display:flex;gap:5px;margin-left:auto}
+.stb{font-size:11px;padding:4px 12px;border:1px solid var(--bd);background:none;color:var(--mu);cursor:pointer}
+.stb.on{background:var(--bl);color:#fff;border-color:var(--bl)}
+.mc{background:var(--sf);border:1px solid var(--bd);margin-bottom:8px;overflow:hidden}
+.mct{display:flex;align-items:center;padding:10px 12px;gap:10px;border-bottom:1px solid var(--bdl)}
+.ms{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--bl);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--bl);flex-shrink:0;position:relative}
+.ms::after{content:'';position:absolute;inset:4px;border-radius:50%;border:1px solid rgba(26,111,170,.18)}
+.mni{flex:1}
+.mna{font-size:13px;color:var(--ink)}
+.msu{font-size:10px;color:var(--mu);margin-top:1px}
+.mbv{font-family:'Shippori Mincho',serif;font-size:14px;text-align:right}
+.mbl{font-size:9px;color:var(--ht);text-align:right;margin-top:1px}
+.pos{color:var(--sg)!important}
+.neg{color:var(--rs)!important}
+.zer{color:var(--mu)!important}
+.mr{display:flex;align-items:center;padding:6px 12px;border-bottom:1px solid var(--bdl);font-size:11px;gap:6px}
+.mr:last-child{border-bottom:none}
+.mrn{flex:1;color:var(--mid)}
+.mrp{color:var(--mu);min-width:64px;text-align:right}
+.mrs{color:var(--ht);min-width:64px;text-align:right}
+.mrd{min-width:64px;text-align:right;font-size:11px}
+.tsec{background:var(--sf);border:1px solid var(--bd);margin-bottom:8px}
+.thd{padding:9px 12px;background:var(--tnp);border-bottom:1px solid var(--tnb)}
+.tht{font-family:'Shippori Mincho',serif;font-size:10px;letter-spacing:.18em;color:var(--tn)}
+.ti{display:flex;align-items:center;padding:9px 12px;gap:8px;border-bottom:1px solid var(--bdl)}
+.ti:last-child{border-bottom:none}
+.tsl{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--bl);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--bl)}
+.tnm{font-size:12px;color:var(--mid)}
+.tar{color:var(--ht);font-size:15px;margin:0 4px}
+.tam{margin-left:auto;font-family:'Shippori Mincho',serif;font-size:13px;color:var(--bl)}
+/* modals */
+.mbg{display:none;position:fixed;inset:0;background:rgba(10,30,55,.42);z-index:200;align-items:flex-end;justify-content:center}
+.mbg.open{display:flex}
+.modal{background:var(--sf);width:100%;max-width:680px;border-top:3px solid var(--bl);padding:20px;max-height:84vh;overflow-y:auto}
+.mtt{font-family:'Shippori Mincho',serif;font-size:14px;letter-spacing:.15em;color:var(--ink);margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid var(--bdl);display:flex;align-items:center;gap:8px}
+.mdec{width:18px;height:2px;background:var(--bl);flex-shrink:0}
+.fld{margin-bottom:12px}
+.fld label{display:block;font-size:10px;letter-spacing:.14em;color:var(--mu);margin-bottom:5px}
+.fld input,.fld select{width:100%;padding:7px 10px;border:1px solid var(--bd);background:var(--sf2);font-family:'Noto Sans JP',sans-serif;font-size:12px;color:var(--ink);outline:none;border-radius:0}
+.fld input:focus,.fld select:focus{border-color:var(--bl)}
+.flr{display:flex;gap:8px}
+.flr .fld{flex:1}
+/* split picker */
+.spkr{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.spc{display:flex;align-items:center;padding:5px 12px;border:1px solid var(--bd);cursor:pointer;user-select:none;font-size:11px;color:var(--mu);background:var(--sf2);transition:all .15s}
+.spc.on{background:var(--bl);color:#fff;border-color:var(--bl)}
+.spc input{display:none}
+.spah{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+.spab{font-size:10px;color:var(--mu);background:none;border:1px solid var(--bd);padding:2px 8px;cursor:pointer}
+.spab:hover{border-color:var(--bl);color:var(--bl)}
+.mact{display:flex;gap:8px;margin-top:16px}
+.bok{flex:1;padding:9px;background:var(--bl);color:#fff;border:none;font-family:'Noto Sans JP',sans-serif;font-size:12px;cursor:pointer}
+.bok:hover{background:var(--bll)}
+.bcm{flex:1;padding:9px;background:none;color:var(--mu);border:1px solid var(--bd);font-family:'Noto Sans JP',sans-serif;font-size:12px;cursor:pointer}
+/* confirm */
+.cfg{display:none;position:fixed;inset:0;background:rgba(10,30,55,.45);z-index:300;align-items:center;justify-content:center}
+.cfg.open{display:flex}
+.cfb{background:var(--sf);border-top:3px solid var(--rs);padding:20px;width:290px}
+.cfm{font-size:13px;color:var(--mid);margin-bottom:16px;line-height:1.6}
+.cfa{display:flex;gap:8px}
+.bdl{flex:1;padding:8px;background:var(--rs);color:#fff;border:none;font-family:'Noto Sans JP',sans-serif;font-size:12px;cursor:pointer}
+.bcc{flex:1;padding:8px;background:none;color:var(--mu);border:1px solid var(--bd);font-family:'Noto Sans JP',sans-serif;font-size:12px;cursor:pointer}
+.emp{text-align:center;padding:28px;font-size:11px;color:var(--ht);letter-spacing:.08em}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="hdr"><div class="hi">
+    <div class="ht">
+      <div class="br"><div class="km"></div>
+        <div><div class="tn" id="TN">日本中部之旅</div><div class="td" id="TD">2025.06.09 — 06.14 · 四名旅人</div></div>
+      </div>
+      <button class="hb" onclick="oTE()">設定</button>
+    </div>
+    <div class="tabs">
+      <div class="tab on" onclick="sw('it',this)">行程<span class="tjp">旅程</span></div>
+      <div class="tab" onclick="sw('ex',this)">記帳<span class="tjp">家計</span></div>
+      <div class="tab" onclick="sw('sp',this)">分帳<span class="tjp">割勘</span></div>
+    </div>
+  </div></div>
+  <div class="ct">
+    <div id="t-it">
+      <div id="DL"></div>
+      <div class="fr"><button class="bto" onclick="addDay()">＋ 新增一天</button><button class="bts" onclick="oEM(null)">＋ 新增支出</button></div>
+    </div>
+    <div id="t-ex" style="display:none">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:10px"><button class="bts" style="flex:unset;padding:7px 16px" onclick="oEM(null)">＋ 新增支出</button></div>
+      <div class="bc" id="BC"></div>
+      <div class="frow">
+        <div class="ft on" onclick="fc(this,'all')">全部</div>
+        <div class="ft" onclick="fc(this,'餐飲')">餐飲</div><div class="ft" onclick="fc(this,'交通')">交通</div>
+        <div class="ft" onclick="fc(this,'住宿')">住宿</div><div class="ft" onclick="fc(this,'景點')">景點</div>
+        <div class="ft" onclick="fc(this,'購物')">購物</div><div class="ft" onclick="fc(this,'其他')">其他</div>
+      </div>
+      <div id="EL"></div>
+    </div>
+    <div id="t-sp" style="display:none"><div id="SV"></div></div>
+  </div>
+</div>
+
+<!-- event modal -->
+<div class="mbg" id="mEv"><div class="modal"><div class="mtt"><span class="mdec"></span><span id="mEvT">新增行程項目</span></div><div id="mEvC"></div></div></div>
+<!-- expense modal -->
+<div class="mbg" id="mEx"><div class="modal"><div class="mtt"><span class="mdec"></span><span id="mExT">新增支出</span></div><div id="mExC"></div></div></div>
+<!-- trip modal -->
+<div class="mbg" id="mTr"><div class="modal">
+  <div class="mtt"><span class="mdec"></span>旅程設定</div>
+  <div class="fld"><label>旅程名稱</label><input id="eTN"/></div>
+  <div class="flr"><div class="fld"><label>出發日期</label><input type="date" id="eSD"/></div><div class="fld"><label>回程日期</label><input type="date" id="eED"/></div></div>
+  <div class="fld"><label>預算（TWD）</label><input type="number" id="eBG"/></div>
+  <div class="fld"><label>成員（逗號分隔）</label><input id="eMB"/></div>
+  <div class="mact"><button class="bcm" onclick="cm('mTr')">取消</button><button class="bok" onclick="sTE()">儲存</button></div>
+</div></div>
+<!-- day modal -->
+<div class="mbg" id="mDa"><div class="modal">
+  <div class="mtt"><span class="mdec"></span>編輯天數</div>
+  <div class="fld"><label>標題</label><input id="dLb"/></div>
+  <div class="fld"><label>日期</label><input id="dDt"/></div>
+  <div class="mact"><button class="bcm" onclick="cm('mDa')">取消</button><button class="bok" onclick="sDE()">儲存</button></div>
+</div></div>
+<!-- confirm -->
+<div class="cfg" id="mCf"><div class="cfb">
+  <div class="cfm" id="cfM"></div>
+  <div class="cfa"><button class="bcc" onclick="ccf()">取消</button><button class="bdl" id="cfOk">刪除</button></div>
+</div></div>
+
+<script>
+const CC={餐飲:'#7A6348',交通:'#1A6FAA',住宿:'#1E3A5A',景點:'#3A6050',購物:'#8B3A2A',其他:'#6A8FA8'};
+const TC={transport:'#1A6FAA',food:'#7A6348',stay:'#1E3A5A',sightseeing:'#3A6050'};
+const TL={sightseeing:'景點',food:'餐飲',transport:'交通',stay:'住宿'};
+let _dId=null,_eId=null,_xId=null,_sm='detail';
+
+let S={
+  tripName:'日本中部之旅',startDate:'2025-06-09',endDate:'2025-06-14',
+  budget:120000,members:['Robert','Amy','Allen','Carol'],
+  days:[
+    {id:1,label:'抵達金澤',date:'06/09',events:[
+      {id:101,time:'15:30',type:'transport',name:'CX530 抵達中部國際機場',note:'桃園 → 名古屋',cost:0,paidBy:'',pm:'刷卡',sm:['Robert','Amy','Allen','Carol']},
+      {id:102,time:'17:00',type:'transport',name:'Toyota 太閣口店 取車',note:'租車 D1–D4，20:00前還車',cost:18000,paidBy:'Robert',pm:'刷卡',sm:['Robert','Amy','Allen','Carol']},
+      {id:103,time:'17:30',type:'transport',name:'自駕前往金澤',note:'約2.5小時，含高速費',cost:2800,paidBy:'Robert',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:104,time:'20:30',type:'stay',name:'金澤三井花園飯店',note:'Mitsui Garden Hotel Kanazawa',cost:12000,paidBy:'Amy',pm:'刷卡',sm:['Robert','Amy','Allen','Carol']},
+    ]},
+    {id:2,label:'金澤 → 高山',date:'06/10',events:[
+      {id:201,time:'09:00',type:'sightseeing',name:'兼六園',note:'日本三大名園之一，入場費¥320/人',cost:1280,paidBy:'Allen',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:202,time:'11:00',type:'sightseeing',name:'21世紀美術館',note:'免費區域開放參觀',cost:0,paidBy:'',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:203,time:'13:00',type:'food',name:'近江町市場午餐',note:'海鮮丼、新鮮海產',cost:8000,paidBy:'Carol',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:204,time:'15:30',type:'transport',name:'自駕前往高山市',note:'約2小時，含高速費',cost:1200,paidBy:'Robert',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:205,time:'18:00',type:'stay',name:'高山東急飯店',note:'Takayama Tokyu Hotel',cost:14000,paidBy:'Robert',pm:'刷卡',sm:['Robert','Amy','Allen','Carol']},
+    ]},
+    {id:3,label:'上高地',date:'06/11',events:[
+      {id:301,time:'07:00',type:'transport',name:'自駕至沢渡停車場',note:'上高地禁止私家車，停車¥700',cost:700,paidBy:'Robert',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:302,time:'08:00',type:'transport',name:'沢渡→上高地 接駁巴士',note:'來回¥2400/人×4',cost:9600,paidBy:'Amy',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:303,time:'09:00',type:'sightseeing',name:'河童橋',note:'上高地標誌性景點，穗高連峰絕景',cost:0,paidBy:'',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:304,time:'11:30',type:'sightseeing',name:'明神池',note:'穗高神社奧宮，嘉門次小屋附近，¥500/人',cost:2000,paidBy:'Allen',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:305,time:'13:00',type:'food',name:'嘉門次小屋午餐',note:'岩魚定食',cost:6000,paidBy:'Carol',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:306,time:'18:00',type:'stay',name:'大正池飯店',note:'Hotel Taisho-ike，上高地園區內',cost:40000,paidBy:'Robert',pm:'刷卡',sm:['Robert','Amy','Allen','Carol']},
+    ]},
+    {id:4,label:'高山老街 → 名古屋',date:'06/12',events:[
+      {id:401,time:'09:00',type:'transport',name:'上高地→高山市',note:'接駁巴士下山',cost:0,paidBy:'',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:402,time:'10:30',type:'sightseeing',name:'高山老街散策',note:'三町筋歷史街道、陣屋朝市',cost:0,paidBy:'',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:403,time:'12:30',type:'food',name:'高山午餐',note:'飛驒牛握壽司、味噌串燒',cost:7200,paidBy:'Amy',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:404,time:'15:00',type:'transport',name:'自駕返回名古屋',note:'約2小時，含高速費',cost:2200,paidBy:'Robert',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:405,time:'18:30',type:'stay',name:'Comfort Inn 榮',note:'名古屋市中心，榮站附近',cost:8000,paidBy:'Carol',pm:'刷卡',sm:['Robert','Amy','Allen','Carol']},
+      {id:406,time:'19:30',type:'transport',name:'⚠ Toyota 太閣口店 還車',note:'務必 20:00 前完成還車',cost:0,paidBy:'',pm:'刷卡',sm:['Robert','Amy','Allen','Carol']},
+    ]},
+    {id:5,label:'名古屋觀光',date:'06/13',events:[
+      {id:501,time:'09:00',type:'sightseeing',name:'名古屋城',note:'金鯱天守閣，本丸御殿，¥500/人',cost:2000,paidBy:'Allen',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:502,time:'12:00',type:'food',name:'名古屋午餐',note:'味噌豬排、矢場味噌',cost:5600,paidBy:'Robert',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:503,time:'14:00',type:'sightseeing',name:'榮區逛街',note:'松坂屋、LABI、Parco',cost:0,paidBy:'',pm:'刷卡',sm:['Robert','Amy','Allen','Carol']},
+      {id:504,time:'19:00',type:'food',name:'名古屋晚餐',note:'手羽先、鰻魚飯',cost:6400,paidBy:'Amy',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+    ]},
+    {id:6,label:'返程',date:'06/14',events:[
+      {id:601,time:'08:00',type:'transport',name:'榮町掃貨',note:'地下街、Sunshine Sakae附近',cost:0,paidBy:'',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:602,time:'11:00',type:'transport',name:'機場巴士 榮→中部國際機場',note:'約75分鐘，提前購票，¥700/人×4',cost:2800,paidBy:'Carol',pm:'現金',sm:['Robert','Amy','Allen','Carol']},
+      {id:603,time:'13:30',type:'transport',name:'CX531 中部國際機場→桃園',note:'回程班機',cost:0,paidBy:'',pm:'刷卡',sm:['Robert','Amy','Allen','Carol']},
+    ]},
+  ],
+  expenses:[],cf:'all'
+};
+
+// init expenses from events
+S.days.forEach(day=>day.events.forEach(ev=>{
+  if(ev.cost>0) S.expenses.push({id:ev.id,name:ev.name,cat:TL[ev.type]||'其他',amount:ev.cost,paidBy:ev.paidBy,date:day.date,pm:ev.pm,sm:[...ev.sm]});
+}));
+
+function render(){rD();rE();rS();}
+
+/* ── DAYS ── */
+function rD(){
+  document.getElementById('DL').innerHTML=S.days.map((day,i)=>`
+    <div class="dc">
+      <div class="dh">
+        <div class="dnc"><span class="dnj">第</span><span class="dnv">${i+1}</span><span class="dnj">天</span></div>
+        <div class="di"><div class="dl">${day.label}</div><div class="dd">${day.date}</div></div>
+        <div class="da">
+          <span class="dbg">${day.events.length} 項</span>
+          <button class="ib" onclick="oDayE(${day.id})">✎ 編輯</button>
+          <button class="ib x" onclick="cDel('day',${day.id},null,'${e(day.label)}')">✕</button>
+        </div>
+      </div>
+      ${day.events.map(ev=>`
+        <div class="ei">
+          <div class="etc"><span class="etm">${ev.time||'—'}</span></div>
+          <div class="estr" style="background:${TC[ev.type]||'#6A8FA8'}"></div>
+          <div class="eb">
+            <div class="en">${ev.name}</div>
+            ${ev.note?`<div class="eno">${ev.note}</div>`:''}
+            ${ev.cost>0?`<div class="etgs">${ev.sm.map(m=>`<span class="etg">${m}</span>`).join('')}<span class="pb ${ev.pm==='現金'?'cash':'card'}" style="margin-left:2px">${ev.pm}</span></div>`:''}
+          </div>
+          <div class="ea">
+            <a class="emap" href="https://maps.google.com/?q=${encodeURIComponent(ev.name)}" target="_blank">地図</a>
+            <button class="ib" onclick="oEE(${day.id},${ev.id})">✎</button>
+            <button class="ib x" onclick="cDel('ev',${day.id},${ev.id},'${e(ev.name)}')">✕</button>
+          </div>
+          <div class="ec">${ev.cost?'NT$'+ev.cost.toLocaleString():''}</div>
+        </div>`).join('')}
+      <div class="ar" onclick="oAE(${day.id})"><div class="ari">＋</div><div class="art">新增項目</div></div>
+    </div>`).join('');
+}
+
+/* ── EXPENSES ── */
+function rE(){
+  const tot=S.expenses.reduce((s,x)=>s+x.amount,0);
+  const pc={};S.expenses.forEach(x=>{pc[x.cat]=(pc[x.cat]||0)+x.amount;});
+  document.getElementById('BC').innerHTML=`
+    <div class="btp"><div class="btl">総支出 / 合計</div><div class="btv">NT$ ${tot.toLocaleString()}</div></div>
+    <div class="brs">
+      <div class="br2"><span class="brl">預算上限</span><span class="brv">NT$ ${(S.budget||0).toLocaleString()}</span></div>
+      ${Object.entries(pc).map(([k,v])=>`<div class="br2"><span class="brl"><span class="cd" style="background:${CC[k]}"></span>${k}</span><span class="brv">NT$ ${v.toLocaleString()}</span></div>`).join('')}
+    </div>`;
+  const lst=S.cf==='all'?S.expenses:S.expenses.filter(x=>x.cat===S.cf);
+  document.getElementById('EL').innerHTML=lst.length?lst.map(x=>`
+    <div class="eli">
+      <div class="estr2" style="background:${CC[x.cat]||'#6A8FA8'}"></div>
+      <div class="ebo">
+        <div class="enn">${x.name}</div>
+        <div class="emta">${x.date} · ${x.paidBy||'—'} 付款</div>
+        <div class="esr">
+          ${(x.sm||S.members).map(m=>`<span class="esc">${m}</span>`).join('')}
+          <span class="pb ${x.pm==='現金'?'cash':'card'}">${x.pm==='現金'?'💴 現金':'💳 刷卡'}</span>
+        </div>
+      </div>
+      <div class="ert">
+        <div class="eam">NT$ ${x.amount.toLocaleString()}</div>
+        <div class="cpr">每人 NT$ ${Math.round(x.amount/(x.sm||S.members).length).toLocaleString()}</div>
+        <div style="display:flex;gap:4px">
+          <button class="ib" onclick="oEM(${x.id})">✎ 編輯</button>
+          <button class="ib x" onclick="cDel('ex',null,${x.id},'${e(x.name)}')">✕</button>
+        </div>
+      </div>
+    </div>`).join(''):'<div class="emp">尚無記錄</div>';
+}
+
+/* ── SPLIT ── */
+function rS(){
+  const bal={};S.members.forEach(m=>{bal[m]={paid:0,should:0,items:[]};});
+  S.expenses.forEach(x=>{
+    const sm=x.sm||S.members,share=x.amount/sm.length;
+    if(bal[x.paidBy]) bal[x.paidBy].paid+=x.amount;
+    sm.forEach(m=>{if(bal[m]){bal[m].should+=share;bal[m].items.push({name:x.name,paid:x.paidBy===m?x.amount:0,share,pm:x.pm});}});
+  });
+  const tot=S.expenses.reduce((s,x)=>s+x.amount,0);
+  const csh=S.expenses.filter(x=>x.pm==='現金').reduce((s,x)=>s+x.amount,0);
+  const crd=S.expenses.filter(x=>x.pm==='刷卡').reduce((s,x)=>s+x.amount,0);
+  const tx=calcTx(bal);
+  document.getElementById('SV').innerHTML=`
+    <div class="sph">
+      <div class="spht"><div class="sphti">割勘明細 / 分帳結算</div>
+        <div class="spg">
+          <div><div class="ssl">總支出</div><div class="ssv">NT$ ${tot.toLocaleString()}</div></div>
+          <div><div class="ssl">待轉筆數</div><div class="ssv">${tx.length} 筆</div></div>
+          <div><div class="ssl">支出筆數</div><div class="ssv">${S.expenses.length} 筆</div></div>
+        </div>
+      </div>
+      <div class="sphb">
+        <div style="display:flex;gap:10px;font-size:11px;color:var(--mu)">
+          <span><span class="pb cash">💴</span> NT$ ${csh.toLocaleString()}</span>
+          <span><span class="pb card">💳</span> NT$ ${crd.toLocaleString()}</span>
+        </div>
+        <div class="stg">
+          <button class="stb ${_sm==='detail'?'on':''}" onclick="setSm('detail')">個人明細</button>
+          <button class="stb ${_sm==='transfer'?'on':''}" onclick="setSm('transfer')">轉帳清單</button>
+        </div>
+      </div>
+    </div>
+    ${_sm==='detail'?rMD(bal):rTL(tx)}`;
+}
+
+function rMD(bal){
+  return S.members.map(m=>{
+    const b=bal[m],diff=Math.round(b.paid-b.should);
+    const bc=diff>0?'pos':diff<0?'neg':'zer';
+    return`<div class="mc">
+      <div class="mct">
+        <div class="ms">${m.slice(0,3)}</div>
+        <div class="mni"><div class="mna">${m}</div><div class="msu">已付 NT$ ${Math.round(b.paid).toLocaleString()} · 應付 NT$ ${Math.round(b.should).toLocaleString()}</div></div>
+        <div><div class="mbv ${bc}">${diff===0?'已平衡':(diff>0?'+':'')+diff.toLocaleString()}</div><div class="mbl">${diff>0?'待收':diff<0?'應付':'—'}</div></div>
+      </div>
+      ${b.items.length?`<div>
+        <div class="mr" style="background:var(--gyp);font-size:10px;color:var(--mu);padding:4px 12px">
+          <span class="mrn">項目</span><span class="mrp" style="color:var(--ht)">已付</span><span class="mrs">應分攤</span><span class="mrd" style="color:var(--ht)">差額</span>
+        </div>
+        ${b.items.map(it=>{const d=Math.round(it.paid-it.share);return`<div class="mr">
+          <span class="mrn">${it.name}<span class="pb ${it.pm==='現金'?'cash':'card'}" style="margin-left:4px;font-size:8px">${it.pm==='現金'?'現':'卡'}</span></span>
+          <span class="mrp">${it.paid>0?'NT$ '+Math.round(it.paid).toLocaleString():'—'}</span>
+          <span class="mrs">NT$ ${Math.round(it.share).toLocaleString()}</span>
+          <span class="mrd ${d>0?'pos':d<0?'neg':''}">${d===0?'—':(d>0?'+':'')+d.toLocaleString()}</span>
+        </div>`;}).join('')}
+      </div>`:''}
+    </div>`;}).join('');
+}
+
+function rTL(tx){
+  if(!tx.length)return'<div class="emp">大家已結清，無需轉帳 ✓</div>';
+  return`<div class="tsec"><div class="thd"><span class="tht">建議轉帳明細</span></div>
+    ${tx.map((t,i)=>`<div class="ti">
+      <span style="font-size:10px;color:var(--ht);min-width:18px">${i+1}</span>
+      <div class="tsl">${t.f.slice(0,3)}</div><div class="tnm">${t.f}</div>
+      <div class="tar">→</div>
+      <div class="tnm">${t.t}</div><div class="tsl">${t.t.slice(0,3)}</div>
+      <div class="tam">NT$ ${Math.round(t.a).toLocaleString()}</div>
+    </div>`).join('')}
+  </div>`;
+}
+
+function calcTx(bal){
+  const d=[],c=[];
+  S.members.forEach(m=>{const diff=bal[m].paid-bal[m].should;if(diff<-0.5)d.push({n:m,a:-diff});else if(diff>0.5)c.push({n:m,a:diff});});
+  const tx=[],dd=d.map(x=>({...x})),cc=c.map(x=>({...x}));
+  let i=0,j=0;
+  while(i<dd.length&&j<cc.length){const a=Math.min(dd[i].a,cc[j].a);tx.push({f:dd[i].n,t:cc[j].n,a});dd[i].a-=a;cc[j].a-=a;if(dd[i].a<0.5)i++;if(cc[j].a<0.5)j++;}
+  return tx;
+}
+function setSm(v){_sm=v;rS();}
+
+/* ── SPLIT PICKER ── */
+function pkH(sel){
+  return`<div class="spah">
+    <span style="font-size:10px;letter-spacing:.14em;color:var(--mu)">分攤對象（選擇要與誰分）</span>
+    <button class="spab" onclick="togAll()">全選／取消</button>
+  </div>
+  <div class="spkr" id="spkr">
+    ${S.members.map(m=>`<label class="spc ${sel.includes(m)?'on':''}"><input type="checkbox" value="${m}" ${sel.includes(m)?'checked':''} onchange="togC(this)">${m}</label>`).join('')}
+  </div>`;
+}
+function togC(cb){cb.parentElement.classList.toggle('on',cb.checked);}
+function togAll(){const a=[...document.querySelectorAll('#spkr input')],all=a.every(c=>c.checked);a.forEach(c=>{c.checked=!all;c.parentElement.classList.toggle('on',!all);});}
+function gSm(){return[...document.querySelectorAll('#spkr input:checked')].map(c=>c.value);}
+
+/* ── EVENT FORM ── */
+function evFH(ev,fn){
+  const mb=S.members.map(m=>`<option${ev&&ev.paidBy===m?' selected':''}>${m}</option>`).join('');
+  const sel=ev?ev.sm:[...S.members];
+  return`
+    <div class="flr">
+      <div class="fld"><label>時間</label><input type="time" id="fTm" value="${ev?ev.time:'09:00'}"/></div>
+      <div class="fld"><label>類別</label><select id="fTy">
+        <option value="sightseeing"${ev&&ev.type==='sightseeing'?' selected':''}>景點</option>
+        <option value="food"${ev&&ev.type==='food'?' selected':''}>餐飲</option>
+        <option value="transport"${ev&&ev.type==='transport'?' selected':''}>交通</option>
+        <option value="stay"${ev&&ev.type==='stay'?' selected':''}>住宿</option>
+      </select></div>
+    </div>
+    <div class="fld"><label>名稱</label><input id="fNm" value="${ev?ev.name.replace(/"/g,'&quot;'):''}" placeholder="例：兼六園"/></div>
+    <div class="fld"><label>備註</label><input id="fNt" value="${ev?ev.note.replace(/"/g,'&quot;'):''}" placeholder="補充說明"/></div>
+    <div class="flr">
+      <div class="fld"><label>費用（NT$）</label><input type="number" id="fCo" value="${ev?ev.cost:''}" placeholder="0"/></div>
+      <div class="fld"><label>付款人</label><select id="fPy">${mb}</select></div>
+    </div>
+    <div class="fld"><label>付款方式</label><select id="fPm">
+      <option value="現金"${ev&&ev.pm==='現金'?' selected':''}>💴 現金</option>
+      <option value="刷卡"${!ev||ev.pm==='刷卡'?' selected':''}>💳 刷卡</option>
+    </select></div>
+    <div class="fld">${pkH(sel)}</div>
+    <div class="mact"><button class="bcm" onclick="cm('mEv')">取消</button><button class="bok" onclick="${fn}">${ev?'儲存變更':'新增'}</button></div>`;
+}
+
+function oAE(dId){_dId=dId;_eId=null;document.getElementById('mEvT').textContent='新增行程項目';document.getElementById('mEvC').innerHTML=evFH(null,'sEv()');document.getElementById('mEv').classList.add('open');}
+function oEE(dId,eId){
+  const day=S.days.find(d=>d.id===dId),ev=day&&day.events.find(v=>v.id===eId);if(!ev)return;
+  _dId=dId;_eId=eId;document.getElementById('mEvT').textContent='編輯行程項目';document.getElementById('mEvC').innerHTML=evFH(ev,'sEv()');document.getElementById('mEv').classList.add('open');
+}
+function sEv(){
+  const nm=document.getElementById('fNm').value.trim();if(!nm)return;
+  const co=parseInt(document.getElementById('fCo').value)||0,sm=gSm();
+  if(!sm.length){alert('請至少選一位分攤對象');return;}
+  const ed={time:document.getElementById('fTm').value,type:document.getElementById('fTy').value,name:nm,note:document.getElementById('fNt').value,cost:co,paidBy:document.getElementById('fPy').value,pm:document.getElementById('fPm').value,sm};
+  const day=S.days.find(d=>d.id===_dId);if(!day)return;
+  if(_eId){
+    const ev=day.events.find(v=>v.id===_eId);if(!ev)return;
+    Object.assign(ev,ed);
+    const ix=S.expenses.findIndex(x=>x.id===_eId);
+    if(ix>=0){co===0?S.expenses.splice(ix,1):Object.assign(S.expenses[ix],{name:nm,cat:TL[ed.type]||'其他',amount:co,paidBy:ed.paidBy,pm:ed.pm,sm});}
+    else if(co>0) S.expenses.push({id:_eId,name:nm,cat:TL[ed.type]||'其他',amount:co,paidBy:ed.paidBy,date:day.date,pm:ed.pm,sm});
+  }else{
+    const id=Date.now();day.events.push({id,...ed});
+    if(co>0) S.expenses.push({id,name:nm,cat:TL[ed.type]||'其他',amount:co,paidBy:ed.paidBy,date:day.date,pm:ed.pm,sm});
+  }
+  cm('mEv');render();
+}
+
+/* ── EXPENSE FORM ── */
+function exFH(ex,fn){
+  const mb=S.members.map(m=>`<option${ex&&ex.paidBy===m?' selected':''}>${m}</option>`).join('');
+  const sel=ex?ex.sm:[...S.members];
+  return`
+    <div class="fld"><label>名稱</label><input id="xNm" value="${ex?ex.name.replace(/"/g,'&quot;'):''}" placeholder="例：晚餐"/></div>
+    <div class="flr">
+      <div class="fld"><label>金額（NT$）</label><input type="number" id="xAm" value="${ex?ex.amount:''}" placeholder="0"/></div>
+      <div class="fld"><label>類別</label><select id="xCt">${['餐飲','交通','住宿','景點','購物','其他'].map(c=>`<option${ex&&ex.cat===c?' selected':''}>${c}</option>`).join('')}</select></div>
+    </div>
+    <div class="flr">
+      <div class="fld"><label>付款人</label><select id="xPy">${mb}</select></div>
+      <div class="fld"><label>付款方式</label><select id="xPm"><option value="現金"${ex&&ex.pm==='現金'?' selected':''}>💴 現金</option><option value="刷卡"${!ex||ex.pm==='刷卡'?' selected':''}>💳 刷卡</option></select></div>
+    </div>
+    <div class="fld"><label>日期（例：06/09）</label><input id="xDt" value="${ex?ex.date:''}" placeholder="06/09"/></div>
+    <div class="fld">${pkH(sel)}</div>
+    <div class="mact"><button class="bcm" onclick="cm('mEx')">取消</button><button class="bok" onclick="${fn}">${ex?'儲存變更':'新增'}</button></div>`;
+}
+
+function oEM(xId){
+  _xId=xId;const ex=xId?S.expenses.find(x=>x.id===xId):null;
+  document.getElementById('mExT').textContent=ex?'編輯支出':'新增支出';
+  document.getElementById('mExC').innerHTML=exFH(ex,'sEx()');
+  document.getElementById('mEx').classList.add('open');
+}
+function sEx(){
+  const nm=document.getElementById('xNm').value.trim(),am=parseInt(document.getElementById('xAm').value)||0;
+  if(!nm||!am)return;
+  const sm=gSm();if(!sm.length){alert('請至少選一位分攤對象');return;}
+  const d={name:nm,cat:document.getElementById('xCt').value,amount:am,paidBy:document.getElementById('xPy').value,pm:document.getElementById('xPm').value,date:document.getElementById('xDt').value||'—',sm};
+  if(_xId){const ix=S.expenses.findIndex(x=>x.id===_xId);if(ix>=0)Object.assign(S.expenses[ix],d);}
+  else S.expenses.push({id:Date.now(),...d});
+  cm('mEx');render();
+}
+
+/* ── DAY / TRIP ── */
+function oDayE(dId){const day=S.days.find(d=>d.id===dId);if(!day)return;_dId=dId;document.getElementById('dLb').value=day.label;document.getElementById('dDt').value=day.date;document.getElementById('mDa').classList.add('open');}
+function sDE(){const day=S.days.find(d=>d.id===_dId);if(!day)return;day.label=document.getElementById('dLb').value||day.label;day.date=document.getElementById('dDt').value||day.date;cm('mDa');render();}
+function addDay(){S.days.push({id:Date.now(),label:'第'+(S.days.length+1)+'天',date:'—',events:[]});render();}
+function oTE(){document.getElementById('eTN').value=S.tripName;document.getElementById('eBG').value=S.budget;document.getElementById('eMB').value=S.members.join(', ');document.getElementById('mTr').classList.add('open');}
+function sTE(){
+  S.tripName=document.getElementById('eTN').value||S.tripName;S.budget=parseInt(document.getElementById('eBG').value)||0;
+  S.members=document.getElementById('eMB').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const sd=document.getElementById('eSD').value,ed=document.getElementById('eED').value;
+  if(sd)S.startDate=sd;if(ed)S.endDate=ed;
+  document.getElementById('TN').textContent=S.tripName;
+  document.getElementById('TD').textContent=`${S.startDate.replace(/-/g,'.')} — ${S.endDate.replace(/-/g,'.').slice(5)} · ${S.members.length}名旅人`;
+  cm('mTr');render();
+}
+
+/* ── DELETE ── */
+function cDel(type,dId,iId,name){
+  document.getElementById('cfM').textContent={day:`確定刪除「${name}」這一天及全部項目？`,ev:`確定刪除「${name}」？`,ex:`確定刪除支出「${name}」？`}[type];
+  document.getElementById('cfOk').onclick=()=>{
+    if(type==='day'){const day=S.days.find(d=>d.id===dId);if(day)day.events.forEach(v=>{S.expenses=S.expenses.filter(x=>x.id!==v.id);});S.days=S.days.filter(d=>d.id!==dId);}
+    else if(type==='ev'){const day=S.days.find(d=>d.id===dId);if(day)day.events=day.events.filter(v=>v.id!==iId);S.expenses=S.expenses.filter(x=>x.id!==iId);}
+    else S.expenses=S.expenses.filter(x=>x.id!==iId);
+    ccf();render();
+  };
+  document.getElementById('mCf').classList.add('open');
+}
+function ccf(){document.getElementById('mCf').classList.remove('open');}
+function cm(id){document.getElementById(id).classList.remove('open');}
+function e(s){return(s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;');}
+function sw(tab,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));el.classList.add('on');['it','ex','sp'].forEach(id=>{document.getElementById('t-'+id).style.display=id===tab?'block':'none';});}
+function fc(el,cat){document.querySelectorAll('.ft').forEach(t=>t.classList.remove('on'));el.classList.add('on');S.cf=cat;rE();}
+['mEv','mEx','mTr','mDa'].forEach(id=>{document.getElementById(id).addEventListener('click',function(ev){if(ev.target===this)cm(id);});});
+document.getElementById('mCf').addEventListener('click',function(ev){if(ev.target===this)ccf();});
+
+/* ══════════════════════════════════
+   Google Sheets 雲端同步
+   ══════════════════════════════════ */
+const API='https://script.google.com/macros/s/AKfycbzf6LmOJWe39uzXyn7foYJUHMTExHTkY0Ho64a4-09u_LlMprpNMvur2GDoqHij_GuE/exec';
+let _saving=false,_saveTimer=null,_lastHash='',_pollTimer=null,_cbIdx=0;
+
+// 底部狀態列
+function injectBar(){
+  const b=document.createElement('div');
+  b.id='sBar';
+  b.style.cssText='position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#1A2B3C;color:rgba(255,255,255,.8);font-family:Noto Sans JP,sans-serif;font-size:11px;letter-spacing:.08em;display:flex;align-items:center;justify-content:space-between;padding:7px 16px;border-top:2px solid #1A6FAA;';
+  b.innerHTML='<span id="sStat">⟳ 連線中…</span><button onclick="loadFromSheet()" style="font-size:10px;color:#A0C4DC;background:none;border:1px solid #3A5870;padding:2px 10px;cursor:pointer;">重新整理</button>';
+  document.body.appendChild(b);
+  document.body.style.paddingBottom='38px';
+}
+
+function setStat(msg,col){
+  const el=document.getElementById('sStat');
+  if(el){el.textContent=msg;el.style.color=col||'rgba(255,255,255,.8)';}
+}
+
+// JSONP 讀取（繞過 CORS GET 限制）
+function jsonpGet(url){
+  return new Promise((resolve,reject)=>{
+    const cb='_cb'+(++_cbIdx);
+    const sc=document.createElement('script');
+    const tm=setTimeout(()=>{cleanup();reject(new Error('timeout'));},15000);
+    function cleanup(){clearTimeout(tm);delete window[cb];sc.parentNode&&sc.parentNode.removeChild(sc);}
+    window[cb]=d=>{cleanup();resolve(d);};
+    sc.onerror=()=>{cleanup();reject(new Error('script error'));};
+    sc.src=url+'&callback='+cb;
+    document.head.appendChild(sc);
+  });
+}
+
+// 從 Sheets 讀取（JSONP）
+async function loadFromSheet(){
+  setStat('⟳ 讀取中…','#A0C4DC');
+  try{
+    const data=await jsonpGet(API+'?action=read');
+    if(!data||Object.keys(data).length===0){
+      await saveToSheet(true);
+      setStat('✓ 已初始化','#DFF0E8');
+      return;
+    }
+    const cf=S.cf;
+    Object.assign(S,data);
+    S.cf=cf;
+    render._skip=true;render();render._skip=false;
+    const t=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
+    setStat('✓ 已同步 '+t,'#DFF0E8');
+    _lastHash=JSON.stringify({...S,cf:undefined});
+  }catch(err){
+    setStat('✗ 讀取失敗，請按重新整理','#F5E8E5');
+    console.error(err);
+  }
+}
+
+// 寫入 Sheets（fetch POST）
+async function saveToSheet(force){
+  if(_saving)return;
+  const payload={...S};delete payload.cf;
+  const hash=JSON.stringify(payload);
+  if(!force&&hash===_lastHash)return;
+  _saving=true;setStat('⬆ 儲存中…','#EDE5D8');
+  try{
+    const res=await fetch(API,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({action:'write',data:payload})
+    });
+    const json=await res.json();
+    if(json.ok){
+      _lastHash=hash;
+      const t=new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'});
+      setStat('✓ 已儲存 '+t,'#DFF0E8');
+    }else{setStat('✗ 儲存失敗','#F5E8E5');}
+  }catch(err){
+    setStat('✗ 儲存失敗，請重試','#F5E8E5');
+    console.error(err);
+  }finally{_saving=false;}
+}
+
+// 攔截 render，操作後自動存檔
+const _baseRender=render;
+function render(){
+  _baseRender();
+  if(render._skip)return;
+  clearTimeout(_saveTimer);
+  _saveTimer=setTimeout(()=>saveToSheet(false),600);
+}
+
+// 每 30 秒輪詢一次，接收朋友的更新
+function startPoll(){
+  clearInterval(_pollTimer);
+  _pollTimer=setInterval(()=>{if(!_saving)loadFromSheet();},30000);
+}
+
+injectBar();
+loadFromSheet().then(startPoll);
+</script>
+</body></html>
